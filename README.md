@@ -29,8 +29,7 @@ bash
 ## Technologies Used
 - Node.js
 - Express.js
-- MongoDB (Mongoose)
-- JWT Authentication
+- Socket.io
 
 ## Author
 - Welldone Esu
@@ -38,10 +37,8 @@ bash
 
 ---
 
-## ** 6. Frist Commit and push
+## ** 6. second Commit and push
 bash
 - git add .
-- git commit -m "feat: initial project setup with folder structure and README"
-- git branch -M main
-- git remote add origin https://github.com/WelldoneEsu/simple-chat-app.git
-- git push -u origin main
+- git commit -m "feat: implement basic real-time chat app using Express and Socket.io"
+- git push
