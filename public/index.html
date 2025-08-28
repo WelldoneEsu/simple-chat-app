@@ -2,17 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mini Chat App</title>
+  <title>Join Chat</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <ul id="messages"></ul>
-    <form id="form" action="">
-  <h2>Real-Time Chat</h2>
-  <input id ="input" autocomplte="off" placeholder="Type a message..."/><button>Send</button>
+  <div class="join-container">
+    <h2>Join a Chat Room</h2>
+    <form id="join-form">
+      <input type="text" id="username" placeholder="Enter username" required>
+      <select id="room">
+        <option value="General">General</option>
+        <option value="Sports">Sports</option>
+        <option value="Tech">Tech</option>
+      </select>
+      <button type="submit">Join</button>
+      
 
-  </form>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="client.js"></script>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById('join-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const room = document.getElementById('room').value;
+      if (username) {
+        window.location.href = `chat.html?username=${username}&room=${room}`;
+      }
+    });
+  </script>
 </body>
 </html>
-
