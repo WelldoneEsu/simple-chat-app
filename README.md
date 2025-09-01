@@ -26,7 +26,7 @@ A real-time chat application built using **Node.js**, **Express**, and **Socket.
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/YourUsername/full-chat-app.git
+git clone https://github.com/YourUsername/Simple-chat-app.git
 
 
 ## 📦 Project Setup
