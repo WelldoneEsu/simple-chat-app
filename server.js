@@ -35,6 +35,29 @@ io.on("connection", socket => {
         io.to(room).emit("room users", getUsersInRoom(room));
     });
 
+    
+    // Handle typing indicator
+const typingUsers = {}; // Track typing users by room
+
+socket.on("typing", () => {
+    const user = users[socket.id];
+    if (user) {
+        if (!typingUsers[user.room]) typingUsers[user.room] = new Set();
+        typingUsers[user.room].add(user.username);
+
+        io.to(user.room).emit("typing", Array.from(typingUsers[user.room]));
+    }
+});
+
+socket.on("stop typing", () => {
+    const user = users[socket.id];
+    if (user && typingUsers[user.room]) {
+        typingUsers[user.room].delete(user.username);
+        io.to(user.room).emit("typing", Array.from(typingUsers[user.room]));
+    }
+});
+
+
     // Handle chat messages sent by users
     socket.on("chat message", msg => {
         const user = users[socket.id];

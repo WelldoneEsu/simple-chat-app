@@ -1,59 +1,86 @@
-// Connect to the Socket.io server
+// Connect to Socket.io server
 const socket = io();
 
-// Parse URL parameters to get the username and selected room
+// Get username and room from URL parameters
 const params = new URLSearchParams(window.location.search);
 const username = params.get("username");
 const room = params.get("room");
 
-// Notify the server that the user wants to join a specific room
-socket.emit("joinRoom", { username, room });
+console.log("Joining room:", username, room);
 
-// Get references to DOM elements
+// Emit joinRoom event to server immediately
+if (username && room) {
+    socket.emit("joinRoom", { username, room });
+} else {
+    alert("Username and room are required.");
+    window.location.href = "index.html"; // redirect back if missing params
+}
+
 const messageForm = document.getElementById("message-form");
 const messageInput = document.getElementById("message-input");
 const messages = document.getElementById("messages");
 const userList = document.getElementById("user-list");
 
-// Listen for message form submission
+// Send chat message on form submit
 messageForm.addEventListener("submit", e => {
-    e.preventDefault(); // Prevent the form from refreshing the page
+    e.preventDefault();
 
-    // Send the message if it's not just whitespace
-    if (messageInput.value.trim()) {
-        socket.emit("chat message", messageInput.value.trim()); // Send message to server
-        messageInput.value = ""; // Clear the input field
+    const msg = messageInput.value.trim();
+    if (msg) {
+        socket.emit("chat message", msg);
+        socket.emit("stop typing"); // clear typing indicator after sending
+        messageInput.value = "";
     }
 });
 
-// Logout button click handler
+messageInput.addEventListener("input", () => {
+    if (messageInput.value.trim() !== "") {
+        socket.emit("typing");
+    } else {
+        socket.emit("stop typing");
+    }
+});
+
+// Logout button - emit leaveRoom then disconnect and redirect
 document.getElementById("logout-btn").addEventListener("click", () => {
-    // Notify the server the user is leaving the room
     socket.emit("leaveRoom");
-
-    // Disconnect socket connection cleanly
     socket.disconnect();
-
-    // Redirect user back to the join page
     window.location.href = "index.html";
 });
 
-// Listen for incoming chat messages from the server
+// Listen for chat messages from server
 socket.on("chat message", msg => {
-    // Create a new div element for the message
+    console.log("Received message:", msg);
+
     const div = document.createElement("div");
     div.classList.add("message");
     div.innerText = msg;
-
-    // Add the message to the chat box
     messages.appendChild(div);
 
-    // Auto-scroll to the latest message
+    // Auto-scroll to newest message
     messages.scrollTop = messages.scrollHeight;
 });
 
-// Listen for updated user list in the current room
+// Listen for updated user list in the room
 socket.on("room users", users => {
-    // Update the sidebar with the current users in the room
     userList.innerHTML = users.map(user => `<li>${user.username}</li>`).join("");
+});
+// Typing indicator
+const typingDiv = document.getElementById("typing-indicator");
+
+
+socket.on("typing", usersTyping => {
+    if (usersTyping.length === 0) {
+        typingDiv.textContent = "";
+    } else if (usersTyping.length === 1) {
+        typingDiv.textContent = `${usersTyping[0]} is typing...`;
+    } else if (usersTyping.length === 2) {
+        typingDiv.textContent = `${usersTyping[0]} and ${usersTyping[1]} are typing...`;
+    } else {
+        typingDiv.textContent = "Several people are typing...";
+    }
+});
+
+socket.on("stop typing", () => {
+    typingDiv.innerText = "";
 });

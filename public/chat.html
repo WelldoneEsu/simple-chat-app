@@ -11,14 +11,22 @@
       <h3>Users</h3>
       <ul id="user-list"></ul>
     </aside>
+
     <main class="chat-main">
+      <!-- Chat messages -->
       <div id="messages" class="chat-messages"></div>
+
+      <!-- Typing indicator -->
+      <div id="typing-indicator" class="typing-indicator"></div>
+
+      <!-- Message form -->
       <form id="message-form">
         <input id="message-input" autocomplete="off" placeholder="Type a message..." />
-        <button>Send</button>
+        <button type="submit">Send</button>
       </form>
-        <button id="logout-btn" class="logout-btn">Logout</button>
 
+      <!-- Logout button -->
+      <button id="logout-btn" class="logout-btn">Logout</button>
     </main>
   </div>
 

@@ -4,6 +4,7 @@ A real-time chat application built using **Node.js**, **Express**, and **Socket.
 - 🔐 Room-based chat
 - 👥 User list per room
 - 🔔 Join/leave announcements
+- ✍️ Typing indicators
 - 🎨 Basic UI styling
 
 - ### Featuring multiple rooms and active user tracking.
@@ -11,14 +12,13 @@ A real-time chat application built using **Node.js**, **Express**, and **Socket.
 ---
 
 ## 📦 Features
-
 - 🧍‍♂️ Username prompt before joining
-- 🏠 Multiple chat rooms: General, Sports, Tech (you can add more)
+- 🏠 Multiple chat rooms (General, Sports, Tech — add more easily)
 - 🗣️ Real-time messaging inside rooms
 - 👥 Active user list per room
 - 🔔 Broadcasts when users join or leave a room
-- 📃 Styled message layout and user interface with `style.css`
-
+- ✍️ See when other users are typing
+- 📃 Styled interface with `style.css`
 ---
 
 ## 🛠 Installation & Setup
@@ -43,7 +43,6 @@ npm install express socket.io
 │   ├── index.html        # Main HTML interface
 │   ├── style.css         # Basic chat styling
 │   └── client.js         # Frontend socket.io logic
--   └──chat.css
 -   └──chat.hmtl
     
 ├── server.js             # Express + Socket.io backend
@@ -52,7 +51,7 @@ npm install express socket.io
 
 
 
-- Real-time messa
+- Real-time messaging
 
 ## Installation & Usage
 bash
@@ -84,7 +83,8 @@ bash
 - Enter a username and select a room.
 - Chat with users in the same room.
 - See active users in the sidebar.
-- Get notified when someone joins or leaves.
+- Get notified when someone joins, leaves, or is typing. 
+
 
 ---
 ## ** 6. second Commit and push
@@ -92,6 +92,16 @@ bash
 - git add .
 - git commit -m "feat: implement basic real-time chat app using Express and Socket.io"
 - git push
+
+#  Third commit - Make sure you're inside the project folder
+- cd simple-chat-app
+# Stage all modified files (README.md, client.js, chat.html, etc.)
+- git add .
+# Commit with a descriptive message
+- git commit -m "feat: add typing indicator, logout, and room user events; docs: update README"
+# Push to your GitHub repo
+- git push origin main
+
 
 - ### Run the server
 node server.js
